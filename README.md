@@ -1,8 +1,8 @@
 stanford-machine-learning-course
 ================================
 
-These are my solutions for the Coursera Stanford Machine Learning course, by
-Andrew Ng.
+These are my solutions for the
+[Coursera Stanford Machine Learning course][course], by Andrew Ng.
 
 The exercises are those used during the January 22th - April 11th, 2016
 session.
@@ -14,3 +14,6 @@ are stuck.
 
 All solutions were written and tested in MATLAB 2015b, some also in
 Octave 4.0.0.
+
+
+  [course]: https://www.coursera.org/learn/machine-learning/
