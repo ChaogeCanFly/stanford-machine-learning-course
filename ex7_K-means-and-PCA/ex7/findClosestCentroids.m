@@ -21,11 +21,12 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+% Compute distance from each centroid
+X = reshape(X, size(X,1), 1, size(X,2));
+centroids = reshape(centroids, 1, size(centroids,1), size(centroids,2));
 
-
-
-
-
+distance = sum(bsxfun(@minus, X, centroids).^2, 3);
+[err, idx] = min(distance, [], 2);
 
 % =============================================================
 
