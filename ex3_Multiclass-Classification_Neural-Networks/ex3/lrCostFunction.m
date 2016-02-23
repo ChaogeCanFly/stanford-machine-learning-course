@@ -36,14 +36,12 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+h = sigmoid(X * theta);
+J = -mean( y .* log(h) + (1-y) .* log(1-h), 1) + ...
+    0.5 * lambda / m * sum(theta(2:end).^2);
 
-
-
-
-
-
-
-
+grad = mean( bsxfun(@times, (h-y), X) , 1)';
+grad(2:end) = grad(2:end) + lambda * theta(2:end) / m;
 
 % =============================================================
 

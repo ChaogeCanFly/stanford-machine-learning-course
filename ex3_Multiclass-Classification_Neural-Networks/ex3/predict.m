@@ -21,10 +21,17 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
-
-
-
-
+% Add on threshold terms
+a1 = X;
+a1 = [ones(size(a1,1),1), a1];
+%size(a1), size(Theta1)
+a2 = sigmoid(a1 * Theta1');
+%size(a2)
+a2 = [ones(size(a2,1),1), a2];
+%size(a2), size(Theta2)
+a3 = sigmoid(a2 * Theta2');
+%size(a3)
+[~, p] = max(a3, [], 2);
 
 
 
