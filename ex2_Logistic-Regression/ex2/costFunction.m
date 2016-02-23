@@ -20,9 +20,10 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+h = sigmoid(X * theta);
+J = -mean( y .* log(h) + (1-y) .* log(1-h), 1);
 
-
-
+grad = mean( bsxfun(@times, h-y, X) , 1)';
 
 
 
