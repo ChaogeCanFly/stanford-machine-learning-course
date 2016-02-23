@@ -17,11 +17,11 @@ for iter = 1:num_iters
     %       of the cost function (computeCost) and gradient here.
     %
 
+    % theta_new := theta - alpha * d_J/d_theta
+    % For linear regression,
+    % theta_new := theta - alpha * < (h(x)-y) * X >
 
-
-
-
-
+    theta = theta - alpha * mean( bsxfun(@times, (X * theta - y), X), 1 )';
 
     % ============================================================
 
