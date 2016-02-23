@@ -60,25 +60,55 @@ Theta2_grad = zeros(size(Theta2));
 %               backpropagation. That is, you can compute the gradients for
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
-%
 
+% Get a one-hot encoding of y as targets
+[y_unique, ~, y_idx] = unique(y);
+y_onehot = zeros(m, max(num_labels, length(y_unique)));
+for i=1:m
+    y_onehot(i,y_idx(i)) = 1;
+end
 
+% Propogate forward
 
+% Add on threshold terms
+a1 = X;
+a1 = [ones(size(a1,1),1), a1];
+% size(a1), size(Theta1)
+a2 = sigmoid(a1 * Theta1');
+% size(a2)
+a2 = [ones(size(a2,1),1), a2];
+% size(a2), size(Theta2)
+a3 = sigmoid(a2 * Theta2');
+% size(a3)
+%[~, p] = max(a3, [], 2);
 
+J = sum(sum( -y_onehot.*log(a3) -(1-y_onehot).*log(1-a3) )) / m;
 
+% add regularisation
+J = J + lambda / 2 / m * sum(...
+        [reshape(Theta1(:,2:end),[],1); reshape(Theta2(:,2:end),[],1);]...
+        .^2);
 
+% Compute gradient term
+% Recall from ex3, lrCostFunction.m
+% grad = mean( bsxfun(@times, (a3-y), X) , 1)';
+% grad(2:end) = grad(2:end) + lambda * theta(2:end) / m;
 
+% Average error on every sample
+delta3 = a3 - y_onehot;
+% backpropagate
+% delta2 = delta3 * Theta2 .* sigmoidGradient(a1 * Theta1');
+% size(delta3), size(Theta2), size(a2)
+delta2 = delta3 * Theta2 .* a2 .* (1-a2);
 
+% size(delta3), size(a2), size(Theta2)
+Theta2_grad = delta3' * a2 / m;
+% size(delta2), size(a1), size(Theta1)
+Theta1_grad = delta2(:,2:end)' * a1 / m;
 
-
-
-
-
-
-
-
-
-
+% Regularisation
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + lambda / m * Theta1(:,2:end);
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + lambda / m * Theta2(:,2:end);
 
 % -------------------------------------------------------------
 
